@@ -47,6 +47,38 @@ module.exports = Client => {
         else return false;
     }
 
+    Client.createUser = async member => {
+        let date = new Date()
+        let d = Client.convertDate(date)
+    
+        const userCreated = new userSchema({
+            userID:`${member.user.id}`,
+            guildID:`${member.guild.id}`,
+            gxp: 0,
+            stats:[[d, {gtxp:0, gtm: 0}]]
+        });
+            userCreated.save().then(g => console.log(`BotLog : NRG / Nouvel utilisateur -> ${member.user.name}`));
+    };
+
+    Client.deleteUser = async member => {
+        userSchema.findOneAndDelete({ userID : member.user.id }).then(console.log(`BotLog : NRG / Utilisateur supprimé -> ${member.user.username}`));
+    };
+    
+    Client.getUser = async member => {
+        const data = await guildSchema.findOne({ userID: member.user.id });
+        if (data) return data;
+        else return false;
+    };
+    
+    Client.updateUser = async (member, settings) => {
+        let data = await Client.getUser(member);
+        if(typeof data !== "object") data = {};
+        for(const key in settings) {
+            if(data[key] !== settings[key]) data[key] = settings[key];
+        };
+        return data.updateOne(settings);
+    };
+    
     Client.releve = dbGuild => {
         
     let Mauj = 'rien';

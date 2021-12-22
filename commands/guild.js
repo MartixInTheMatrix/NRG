@@ -8,6 +8,7 @@ const { COMMANDS } = require("../util/commands");
 
 
 module.exports.execute = async(Client, interaction, dbGuild, today) => {
+  
     function bool(value){
       if(value < 0){
         return '-'
@@ -18,6 +19,7 @@ module.exports.execute = async(Client, interaction, dbGuild, today) => {
       }
     }
 let stats = Client.releve(dbGuild)
+
 const membres  = interaction.guild.members.cache.filter(member => !member.user.bot).size - interaction.guild.members.cache.filter(member => member.permissions.has("ADMINISTRATOR") && !member.user.bot).size
       
 const membresTotaux = new QuickChart();
@@ -46,7 +48,6 @@ membresTotaux.setConfig({
       title: {
         fontColor: "#fff",
         display: true,
-        text: 'Membres du serveur',
       },
       plugins: {
         backgroundImageUrl: 'https://cdn.discordapp.com/attachments/816650927254536214/816756917513748490/image0.png',
@@ -62,20 +63,20 @@ messagesTemps.setConfig(
       type:"bar",
       data: {
         fontColor: 'rgb(255, 255, 255)',
-      labels: ['1 sem','6j','5j','4j','3j','2j', 'Hier','Auj'],
+      labels: ['1 sem', '3j', 'Hier','Auj'],
         datasets: [
           
         {
           "type": "line",
           "label": "Messages du serveur",
           "backgroundColor": "rgba(75, 192, 192, 0.5)",
-          "borderColor": cl.rose,
+          "borderColor": cl.green,
           "fill": false,
           "data": [
-            stats[0],
-            stats[1],
-            stats[2],
             stats[3],
+            stats[2],
+            stats[1],
+            stats[0],
           ]
         }
       ],
@@ -88,7 +89,6 @@ messagesTemps.setConfig(
         },
         title: {
           display: true,
-          text: 'Messages du serveur',
           fontColor: 'rgb(255, 255, 255)'
         },
         plugins: {
@@ -104,7 +104,7 @@ membresTemps.setConfig(
   {
     type: 'bar',
     data: {
-      labels: ['1 sem','6j','5j','4j','3j','2j', 'Hier','Auj'],
+      labels: ['1 sem','3j', 'Hier','Auj'],
       datasets: [
         {
           label: 'Membres du serveur',
@@ -112,10 +112,10 @@ membresTemps.setConfig(
           borderColor: cl.rose,
           stack: 'Stack 0',
           data: [
-            stats[4],
-            stats[5],
+            stats[7],
             stats[6],
-            stats[7]
+            stats[5],
+            stats[4]
           ],
         },
         
@@ -124,7 +124,6 @@ membresTemps.setConfig(
     options: {
       title: {
         display: true,
-        text: 'Evolution des membres',
       },
       tooltips: {
         mode: 'index',
@@ -150,12 +149,7 @@ membresTemps.setConfig(
       
     }
   )
-  
-    let MENUembed = new Discord.MessageEmbed()
-    .setTitle('Menu guild')
-    .setColor(cl.invisible)
-    .setDescription('**Réagir aux réactions pour recevoir des informations diverses sur le serveur »** \n\n> 🏠 ・ Menu \n> 🗂 ・ Informations générales \n> ✉️ ・ Statistiques sur les messages \n> 👤 ・ Statistiques sur les membres \n> 📊 ・ Toutes les statistiques / relevé des donnés')
-    
+
     let MSGembed = new Discord.MessageEmbed()
     .setTitle('**' + em.send + ' Messages envoyés**')
     .setColor(cl.invisible)
@@ -163,9 +157,9 @@ membresTemps.setConfig(
     .setImage(messagesTemps.getUrl()) 
 
     let INFOembed = new Discord.MessageEmbed()
-    .setAuthor('» Informations sur le serveur ' +interaction.guild.name, interaction.guild.iconURL())
+    .setAuthor('» Informations sur le serveur', interaction.guild.iconURL())
     .setColor(cl.invisible)
-    .setDescription(`> **${em.owner} Owner »** ${interaction.guild.fetchOwner().username} \n> **${em.time} Crée le »** ${interaction.guild.createdAt}\n> **${em.world} Région »** ${interaction.guild.region}\n> **${em.verified} Vérifié »** ${interaction.guild.verified}\n> **${em.online} En ligne »** ${interaction.guild.members.cache.filter(m => m.presence?.status === 'online' || 'dnd').size}`)
+    .setDescription(`> **${em.owner} Owner »** ${interaction.guild.members.cache.get(interaction.guild.ownerId).user.username} \n> **${em.time} Crée le »** ${interaction.guild.createdAt}\n> **${em.verified} Vérifié »** ${interaction.guild.verified}\n> **${em.online} En ligne »** ${interaction.guild.members.cache.filter(m => m.presence?.status === 'online' || 'dnd').size}`)
     .setImage(membresTotaux.getUrl()) 
 
     let MMBembed = new Discord.MessageEmbed()
@@ -174,20 +168,8 @@ membresTemps.setConfig(
     .setDescription(`\`\`\`diff\n${bool(stats[4])} Aujourd'hui » `+ stats[4] + `\n${bool(stats[5])} Hier » `+ stats[5] + `\n${bool(stats[6])} Il y a 3 jours » `+ stats[6]+ `\n${bool(stats[7])} La semaine dernière » `+ stats[7] + `\`\`\``)
     .setImage(membresTemps.getUrl())
 
-    let ALLembed = new Discord.MessageEmbed()
-    .setAuthor('» Relevé des données', interaction.guild.iconURL())
-    .setColor(cl.invisible)
-    .setDescription(`**__Messages__**\`\`\`diff\n${bool(stats[0])} Aujourd'hui » `+ stats[0] + `\n${bool(stats[1])} Hier » `+ stats[1] + `\n${bool(stats[2])} Il y a 3 jours » `+ stats[2]+ `\n${bool(stats[3])} La semaine dernière » `+ stats[3]+`\n${bool(dbGuild.gxp)} Total  `+ dbGuild.gxp +`\`\`\` **__Membres__**\`\`\`diff\n${bool(stats[4])} Aujourd'hui » `+ stats[4] + `\n${bool(stats[5])} Hier » `+ stats[5] + `\n${bool(stats[6])} Il y a 3 jours » `+ stats[6]+ `\n${bool(stats[7])} La semaine dernière » `+ stats[7] + `\`\`\``)
-    interaction.reply('_ _')
-
-  let msg = await interaction.channel.send({embeds:[MENUembed]})
-await msg.react('🏠').then(()=> msg.react('🗂').then(()=> msg.react('✉️').then(()=> msg.react('👤').then(()=> msg.react('📊'))))) 
-
-
-const filter = (reaction, user) => reaction.emoji.name == '🗂'  && user.id === interaction.user.id
-await msg.awaitReactions(filter, { max: 1, time: 30000})
-  .then(async collected => console.log('t'))
-  .catch(console.error);
+  
+    interaction.reply({embeds:[INFOembed, MSGembed, MMBembed]})
 
 }
 

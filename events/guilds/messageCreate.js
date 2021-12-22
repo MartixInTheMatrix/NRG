@@ -1,6 +1,7 @@
 const discord = require('discord.js')
 
 module.exports = async (Client, message) => {
+
     let date = new Date()
     let d = Client.convertDate(date)
     if(!await Client.getGuild(message.guild)){
