@@ -47,4 +47,60 @@ module.exports = Client => {
         else return false;
     }
 
+    Client.releve = dbGuild => {
+        
+    let Mauj = 'rien';
+    let Mhier = 'rien';
+    let Mj3 = 'rien';
+    let Msemaine = 'rien';
+
+    let Uauj = 'rien';
+    let Uhier = 'rien';
+    let Uj3 = 'rien';
+    let Usemaine = 'rien';
+      if(!dbGuild.stats[dbGuild.stats.length - 1]){
+        Mauj = 0
+        Uauj = 0
+      }
+      if(!dbGuild.stats[dbGuild.stats.length - 2]){
+        Mhier = 0
+        Uhier = 0
+      }
+      if(!dbGuild.stats[dbGuild.stats.length - 4]){
+        Mj3 = 0
+        Uj3 = 0
+    }
+    if(!dbGuild.stats[dbGuild.stats.length - 8]){
+        Msemaine = 0
+        Usemaine = 0
+    }
+
+    if(Mauj == 'rien'){
+        Mauj = dbGuild.stats[dbGuild.stats.length - 1][1].gtxp
+    }
+    if(Mhier == 'rien'){
+        Mhier = dbGuild.stats[dbGuild.stats.length - 2][1].gtxp
+    }
+    if(Mj3 == 'rien'){
+        Mj3 = dbGuild.stats[dbGuild.stats.length - 4][1].gtxp
+    }
+    if(Msemaine == 'rien'){
+        Msemaine = dbGuild.stats[dbGuild.stats.length - 8][1].gtxp
+    }
+    if(Uauj == 'rien'){
+        Uauj = dbGuild.stats[dbGuild.stats.length - 1][1].gtm
+    }
+    if(Uhier == 'rien'){
+        Uhier = dbGuild.stats[dbGuild.stats.length - 2][1].gtm
+    }
+    if(Uj3 == 'rien'){
+        Uj3 = dbGuild.stats[dbGuild.stats.length - 4][1].gtm
+    }
+    if(Usemaine == 'rien'){
+        Usemaine = dbGuild.stats[dbGuild.stats.length - 8][1].gtm
+    }
+
+    return [Mauj, Mhier, Mj3, Msemaine, Uauj, Uhier, Uj3, Usemaine]
+    }
+
 }

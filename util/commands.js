@@ -55,6 +55,13 @@ const COMMANDS = {
             interaction: new SlashCommandBuilder()
             .setName('nrg')
             .setDescription('Donne des informations sur le bot'),
+        },
+        GUILD: {
+            name: 'guild',
+            description: 'Donne les statistiques globales du serveur',
+            interaction: new SlashCommandBuilder()
+            .setName('guild')
+            .setDescription('Donne les statistiques globales du serveur'),
         }
     
 }

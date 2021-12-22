@@ -1,1 +1,17 @@
-{"day":[gtxp, gtm]
+.then(async collected => {
+    
+    await reaction.delete()
+    await msg.react(collected.first().emoji.name)
+    if (collected.first().emoji.name == '🏠') {
+        await msg.edit({embeds:[MENUembed]})
+    }else if (collected.first().emoji.name == '🗂') {
+        await msg.edit({embeds:[INFOembed]})
+    }else if (collected.first().emoji.name == '✉️') {
+        await msg.edit({embeds:[MSGembed]})
+    }else if (collected.first().emoji.name == '👤') {
+        await msg.edit({embeds:[MMBembed]})
+    }else if (collected.first().emoji.name == '📊') {
+        await msg.edit({embeds:[ALLembed]})
+    }
+
+  })
