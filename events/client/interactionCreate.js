@@ -1,16 +1,11 @@
 
 module.exports = async (Client, interaction) => {
     if(!interaction.isCommand())return;
-	let val = interaction.guild.id
-
-	if(interaction.options._hoistedOptions[0]){
-		val = interaction.options._hoistedOptions[0].value
-	}
 
 	let date = new Date()
 
 	const command = Client.commands.get(interaction.commandName);
-	const dbGuild = await Client.getGuild(Client.guilds.cache.get(val))
+	const dbGuild = await Client.getGuild(interaction.guild)
 	const today = Client.convertDate(date)
 
 	if (!command) return;

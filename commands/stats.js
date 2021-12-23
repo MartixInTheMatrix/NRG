@@ -3,6 +3,12 @@ const fs = require('fs')
 const { COMMANDS } = require("../util/commands");
 
 module.exports.execute = async (Client, interaction, dbGuild, today) => {
+  let val = interaction.guild.id
+
+	if(interaction.options._hoistedOptions[0]){
+		val = interaction.options._hoistedOptions[0]
+	}
+  dbGuild = Client.getGuild(val)
     function bool(value){
         if(value < 0){
           return '-'

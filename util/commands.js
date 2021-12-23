@@ -62,6 +62,29 @@ const COMMANDS = {
             interaction: new SlashCommandBuilder()
             .setName('guild')
             .setDescription('Donne les statistiques globales du serveur'),
+        },
+        ANALYSE: {
+            name: 'analyse',
+            description: 'Effectue un test d\'activité',
+            interaction: new SlashCommandBuilder()
+            .setName('analyse')
+            .setDescription('Effectue un test d\'activité')
+            .addChannelOption(option =>
+                option.setName('salon')
+                .setDescription('Mentionnez le salon où vous voulez mettre le test d\'activité')
+                .setRequired(true)
+            )
+            .addStringOption(option =>
+                option.setName('temps')
+                .setDescription('Entrez la durée du test (sous forme 3s, 2d, 1m)')
+                .setRequired(true)
+            )
+            .addRoleOption(option =>
+                option.setName('role')
+                .setDescription('Entrez le role mentionné (non obligatoire)')
+                .setRequired(false)
+            )
+            
         }
     
 }

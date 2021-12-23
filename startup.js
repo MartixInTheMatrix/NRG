@@ -14,7 +14,7 @@ const loadEvents = (Client) => {
         }
     })
 }
-const deploySlashCommands = (client) =>{
+const deploySlashCommands = (client, guild) =>{
 
     const { REST } = require('@discordjs/rest');
     const { Routes } = require('discord-api-types/v9');
@@ -32,12 +32,20 @@ for (const file of commandFiles) {
 }
 
 const rest = new REST({ version: '9' }).setToken(token);
+if(!guild){
+
 client.guilds.cache.forEach((g)=>{
     rest.put(Routes.applicationGuildCommands(id, g.id), { body: commands })
 	.catch((e) => {
         return 
     });
 })
+}else{
+    rest.put(Routes.applicationGuildCommands(id, guild.id), { body: commands })
+	.catch((e) => {
+        return 
+    });
+}
 
 
 }
