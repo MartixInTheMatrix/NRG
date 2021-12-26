@@ -16,6 +16,7 @@ module.exports.execute = async (Client, interaction, dbGuild) => {
     let time = interaction.options._hoistedOptions[1].value
     let role = false
     let res = 1
+    console.log(interaction.options._hoistedOptions[2].value)
     if(interaction.options._hoistedOptions[2]){
         role = interaction.guild.roles.cache.get(interaction.options._hoistedOptions[2].value)
     }
@@ -30,11 +31,11 @@ module.exports.execute = async (Client, interaction, dbGuild) => {
     .setAuthor('Test d\'activité !', interaction.guild.iconURL())
     .setDescription('**Réagissez à la réaction ✅**, ce message donnera lieu à des statistiques sur les membres du serveur. \n\n> **Durée du test: ' + time + '**')
     let msg = await channel.send({embeds:[testEmbed]})
-    if(role){
-        let m = await channel.send('<@' + role.id + ">")
+    if(role != false){
+        let m = await channel.send('<@&' + role.id + '>')
         setTimeout(async()=>{
             await m.delete()
-        },1000)
+        },500)
     }
     await msg.react('✅')
     setTimeout(async ()=>{

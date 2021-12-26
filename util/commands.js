@@ -85,7 +85,14 @@ const COMMANDS = {
                 .setRequired(false)
             )
             
-        }
+        },
+        ME: {
+            name: 'me',
+            description: 'Donne vos statistiques personnelles',
+            interaction: new SlashCommandBuilder()
+            .setName('me')
+            .setDescription('Donne vos statistiques personnelles'),
+        },
     
 }
 module.exports = {

@@ -1,7 +1,6 @@
 const { Client, Intents, Collection, UserFlags } = require('discord.js')
 const config = require('./util/config')
 const client = new Client({intents:config.INTENTS})
-const builder = require('@discordjs/builders');
 
 client.login(config.token)
 client.commands = new Collection()
