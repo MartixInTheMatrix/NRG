@@ -93,6 +93,13 @@ const COMMANDS = {
             .setName('me')
             .setDescription('Donne vos statistiques personnelles'),
         },
+        SETUP: {
+            name: 'setup',
+            description: 'Configurez le bot sur votre serveur',
+            interaction: new SlashCommandBuilder()
+            .setName('setup')
+            .setDescription('Configurez le bot sur votre serveur'),
+        },
     
 }
 module.exports = {

@@ -7,7 +7,10 @@ const guildSchema = new mongoose.Schema({
         type: Array,
         default: [],
         required: true
-    }
+    },
+    modmailID: {type: String, required: false},
+    captcha: {type:Boolean, required: false},
+    bvnID: {type:String, required: false}
 });
 
 module.exports = mongoose.model("Guild", guildSchema);
